@@ -11,6 +11,10 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+  frontRight.SetNeutralMode(Brake);
+  frontLeft.SetNeutralMode(Brake);
+  backRight.SetNeutralMode(Brake);
+  backLeft.SetNeutralMode(Brake);
   frontRight.Set(ControlMode::Follower, Robot::motorControllerPort::backRightPort);
   frontLeft.Set(ControlMode::Follower, Robot::motorControllerPort::backLeftPort);
   backRight.Set(
