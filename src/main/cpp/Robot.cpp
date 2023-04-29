@@ -1,4 +1,8 @@
-#include "Robot.h"
+#include <Robot.h>
+
+#define REGULAR_SPEED .75
+#define TURBO_SPEED 1
+#define TURTLE_SPEED .5
 
 void Robot::RobotInit() {}
 void Robot::RobotPeriodic() {}
@@ -11,19 +15,28 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+  float speedMultiplier = REGULAR_SPEED;
+
   frontRight.SetNeutralMode(Brake);
   frontLeft.SetNeutralMode(Brake);
   backRight.SetNeutralMode(Brake);
   backLeft.SetNeutralMode(Brake);
   frontRight.Set(ControlMode::Follower, Robot::motorControllerPort::backRightPort);
   frontLeft.Set(ControlMode::Follower, Robot::motorControllerPort::backLeftPort);
+
+  if(driverController.GetRightBumper()) {
+    speedMultiplier = TURTLE_SPEED;
+  } else if (driverController.GetLeftBumper()) {
+    speedMultiplier = TURBO_SPEED;
+  }
+
   backRight.Set(
     ControlMode::PercentOutput,
-    -((driverController.GetLeftY() - driverController.GetRightX()) * driverController.GetRightTriggerAxis())
+    -(driverController.GetRightY() * speedMultiplier)
   );
   backLeft.Set(
     ControlMode::PercentOutput,
-    (driverController.GetLeftY() + driverController.GetRightX()) * driverController.GetRightTriggerAxis()
+    driverController.GetLeftY() * speedMultiplier
   );
   if(driverController.GetAButton()) {
     shooter.Set(ControlMode::PercentOutput, 1);
