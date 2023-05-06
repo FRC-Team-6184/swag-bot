@@ -32,11 +32,11 @@ void Robot::TeleopPeriodic() {
 
   backRight.Set(
     ControlMode::PercentOutput,
-    -(driverController.GetRightY() * speedMultiplier)
+    driverController.GetRightY() * speedMultiplier
   );
   backLeft.Set(
     ControlMode::PercentOutput,
-    driverController.GetLeftY() * speedMultiplier
+    -(driverController.GetLeftY() * speedMultiplier)
   );
   if(driverController.GetAButton()) {
     shooter.Set(ControlMode::PercentOutput, 1);
