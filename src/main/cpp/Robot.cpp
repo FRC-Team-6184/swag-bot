@@ -16,7 +16,6 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
   float speedMultiplier = REGULAR_SPEED;
-
   frontRight.SetNeutralMode(Brake);
   frontLeft.SetNeutralMode(Brake);
   backRight.SetNeutralMode(Brake);
@@ -49,6 +48,13 @@ void Robot::TeleopPeriodic() {
   }
   else {
     feeder.Set(ControlMode::PercentOutput, 0);
+  }
+
+  if (driverController.GetXButton()) {
+    spinner.Set(ControlMode::PercentOutput, .2);
+  }
+  if (driverController.GetYButton()) {
+    spinner.Set(ControlMode::PercentOutput, 0);
   }
 
   if(driverController.GetLeftBumper()) {

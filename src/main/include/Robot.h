@@ -23,8 +23,8 @@ class Robot: public TimedRobot {
     frontLeftPort = 3,
     backLeftPort = 4,
     feederPort = 5, // TODO: VERIFY CAN ADDRESSES
-    shooterPort = 6 // TODO: VERIFY CAN ADDRESSES
-    
+    shooterPort = 6, // TODO: VERIFY CAN ADDRESSES
+    spinnerPort = 7
   };
   enum gameControllerPort {
     driver = 0
@@ -36,6 +36,7 @@ class Robot: public TimedRobot {
   TalonSRX backLeft{motorControllerPort::backLeftPort};
   VictorSPX shooter{motorControllerPort::shooterPort};
   VictorSPX feeder{motorControllerPort::feederPort};
+  TalonSRX spinner{motorControllerPort::spinnerPort};
   XboxController driverController{gameControllerPort::driver};
 
   void RobotInit() override;
