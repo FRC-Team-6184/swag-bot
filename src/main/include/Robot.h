@@ -1,32 +1,35 @@
 #pragma once
 
-#include "ctre/Phoenix.h"
-#include "ctre/phoenix/motorcontrol/can/VictorSPX.h"
-#include "ctre/phoenix/motorcontrol/can/TalonSRX.h"
-#include "frc/XboxController.h"
+#include <ctre/Phoenix.h>
+#include <ctre/phoenix/motorcontrol/can/VictorSPX.h>
+#include <ctre/phoenix/motorcontrol/can/TalonSRX.h>
+#include <frc/XboxController.h>
 #include <frc/TimedRobot.h>
 
-using ctre::phoenix::motorcontrol::can::TalonSRX;
+using ctre::phoenix::motorcontrol::ControlMode;
 using ctre::phoenix::motorcontrol::can::TalonFX;
-using ctre::phoenix::motorcontrol::ControlMode;
-using ctre::phoenix::motorcontrol::ControlMode;
+using ctre::phoenix::motorcontrol::can::TalonSRX;
 using frc::StartRobot;
 using frc::TimedRobot;
 using frc::XboxController;
+using std::string;
 
-class Robot: public TimedRobot {
+class Robot : public TimedRobot
+{
 
- public:
-  enum motorControllerPort {
+public:
+  enum motorControllerPort
+  {
     frontRightPort = 1,
     backRightPort = 2,
     frontLeftPort = 3,
     backLeftPort = 4,
-    feederPort = 5, // TODO: VERIFY CAN ADDRESSES
+    feederPort = 5,  // TODO: VERIFY CAN ADDRESSES
     shooterPort = 6, // TODO: VERIFY CAN ADDRESSES
     spinnerPort = 7
   };
-  enum gameControllerPort {
+  enum gameControllerPort
+  {
     driver = 0
   };
 
@@ -37,7 +40,7 @@ class Robot: public TimedRobot {
   VictorSPX shooter{motorControllerPort::shooterPort};
   VictorSPX feeder{motorControllerPort::feederPort};
   TalonSRX spinner{motorControllerPort::spinnerPort};
-  XboxController driverController{gameControllerPort::driver};
+  XboxController driverXboxController{gameControllerPort::driver};
 
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -56,5 +59,4 @@ class Robot: public TimedRobot {
 
   void SimulationInit() override;
   void SimulationPeriodic() override;
-
 };

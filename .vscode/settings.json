@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.inc": "cpp",
+        "string_view": "cpp",
+        "memory": "cpp"
+    },
+    "java.configuration.updateBuildConfiguration": "automatic"
+}

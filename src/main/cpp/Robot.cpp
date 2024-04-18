@@ -10,11 +10,13 @@ void Robot::RobotPeriodic() {}
 void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() {}
 
-void Robot::TeleopInit() {
+void Robot::TeleopInit()
+{
   shooter.Set(ControlMode::PercentOutput, 0);
 }
 
-void Robot::TeleopPeriodic() {
+void Robot::TeleopPeriodic()
+{
   float speedMultiplier = REGULAR_SPEED;
   frontRight.SetNeutralMode(Brake);
   frontLeft.SetNeutralMode(Brake);
@@ -23,46 +25,55 @@ void Robot::TeleopPeriodic() {
   frontRight.Set(ControlMode::Follower, Robot::motorControllerPort::backRightPort);
   frontLeft.Set(ControlMode::Follower, Robot::motorControllerPort::backLeftPort);
 
-  if(driverController.GetRightBumper()) {
+  if (driverXboxController.GetRightBumper())
+  {
     speedMultiplier = TURTLE_SPEED;
-  } else if (driverController.GetLeftBumper()) {
+  }
+  else if (driverXboxController.GetLeftBumper())
+  {
     speedMultiplier = TURBO_SPEED;
   }
 
   backRight.Set(
-    ControlMode::PercentOutput,
-    driverController.GetRightY() * speedMultiplier
-  );
+      ControlMode::PercentOutput,
+      driverXboxController.GetRightY() * speedMultiplier);
   backLeft.Set(
-    ControlMode::PercentOutput,
-    -(driverController.GetLeftY() * speedMultiplier)
-  );
-  if(driverController.GetAButton()) {
+      ControlMode::PercentOutput,
+      -(driverXboxController.GetLeftY() * speedMultiplier));
+  if (driverXboxController.GetAButton())
+  {
     shooter.Set(ControlMode::PercentOutput, 1);
   }
-  if(driverController.GetBButton()) {
+  if (driverXboxController.GetBButton())
+  {
     shooter.Set(ControlMode::PercentOutput, 0);
   }
-  if(driverController.GetRightBumper()) {
+  if (driverXboxController.GetRightBumper())
+  {
     feeder.Set(ControlMode::PercentOutput, .2);
   }
-  else {
+  else
+  {
     feeder.Set(ControlMode::PercentOutput, 0);
   }
 
-  if (driverController.GetXButton()) {
+  if (driverXboxController.GetXButton())
+  {
     spinner.Set(ControlMode::PercentOutput, .2);
   }
-  if (driverController.GetYButton()) {
+  if (driverXboxController.GetYButton())
+  {
     spinner.Set(ControlMode::PercentOutput, 0);
   }
 
-  if(driverController.GetLeftBumper()) {
+  if (driverXboxController.GetLeftBumper())
+  {
     feeder.Set(ControlMode::PercentOutput, -.2);
   }
 }
 
-void Robot::DisabledInit() {
+void Robot::DisabledInit()
+{
   shooter.Set(ControlMode::PercentOutput, 0);
 }
 
@@ -70,11 +81,14 @@ void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {}
 
-void Robot::TestPeriodic() {
-  if(driverController.GetAButtonPressed()) {
+void Robot::TestPeriodic()
+{
+  if (driverXboxController.GetAButtonPressed())
+  {
     shooter.Set(ControlMode::PercentOutput, 1);
   }
-  if(driverController.GetBButtonPressed()) {
+  if (driverXboxController.GetBButtonPressed())
+  {
     shooter.Set(ControlMode::PercentOutput, 0);
   }
 }
@@ -83,7 +97,8 @@ void Robot::SimulationInit() {}
 void Robot::SimulationPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
-int main() {
+int main()
+{
   return StartRobot<Robot>();
 }
 #endif
