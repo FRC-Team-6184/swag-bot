@@ -1,9 +1,5 @@
 #include <Robot.h>
 
-#define REGULAR_SPEED .75
-#define TURBO_SPEED 1
-#define TURTLE_SPEED .5
-
 void Robot::RobotInit() {}
 void Robot::RobotPeriodic() {}
 
@@ -12,19 +8,17 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit()
 {
-  shooter.Set(ControlMode::PercentOutput, 0);
-}
-
-void Robot::TeleopPeriodic()
-{
-  float speedMultiplier = REGULAR_SPEED;
   frontRight.SetNeutralMode(Brake);
   frontLeft.SetNeutralMode(Brake);
   backRight.SetNeutralMode(Brake);
   backLeft.SetNeutralMode(Brake);
   frontRight.Set(ControlMode::Follower, Robot::motorControllerPort::backRightPort);
   frontLeft.Set(ControlMode::Follower, Robot::motorControllerPort::backLeftPort);
+  shooter.Set(ControlMode::PercentOutput, 0);
+}
 
+void Robot::TeleopPeriodic()
+{
   if (driverXboxController.GetRightBumper())
   {
     speedMultiplier = TURTLE_SPEED;
@@ -40,9 +34,10 @@ void Robot::TeleopPeriodic()
   backLeft.Set(
       ControlMode::PercentOutput,
       -(driverXboxController.GetLeftY() * speedMultiplier));
+
   if (driverXboxController.GetAButton())
   {
-    shooter.Set(ControlMode::PercentOutput, 1);
+    shooter.Set(ControlMode::PercentOutput, 0.3);
   }
   if (driverXboxController.GetBButton())
   {
@@ -50,7 +45,7 @@ void Robot::TeleopPeriodic()
   }
   if (driverXboxController.GetRightBumper())
   {
-    feeder.Set(ControlMode::PercentOutput, .2);
+    feeder.Set(ControlMode::PercentOutput, 1);
   }
   else
   {

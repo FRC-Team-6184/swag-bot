@@ -6,6 +6,10 @@
 #include <frc/XboxController.h>
 #include <frc/TimedRobot.h>
 
+#define TURBO_SPEED 1
+#define REGULAR_SPEED .75
+#define TURTLE_SPEED .5
+
 using ctre::phoenix::motorcontrol::ControlMode;
 using ctre::phoenix::motorcontrol::can::TalonFX;
 using ctre::phoenix::motorcontrol::can::TalonSRX;
@@ -24,8 +28,8 @@ public:
     backRightPort = 2,
     frontLeftPort = 3,
     backLeftPort = 4,
-    feederPort = 5,  // TODO: VERIFY CAN ADDRESSES
-    shooterPort = 6, // TODO: VERIFY CAN ADDRESSES
+    feederPort = 5,
+    shooterPort = 6,
     spinnerPort = 7
   };
   enum gameControllerPort
@@ -41,6 +45,8 @@ public:
   VictorSPX feeder{motorControllerPort::feederPort};
   TalonSRX spinner{motorControllerPort::spinnerPort};
   XboxController driverXboxController{gameControllerPort::driver};
+
+  float speedMultiplier = REGULAR_SPEED;
 
   void RobotInit() override;
   void RobotPeriodic() override;
